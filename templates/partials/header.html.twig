@@ -11,7 +11,20 @@
 	<nav class="navbar-wic position-relative" id="navbar">
 		<a href="/"><img class="logo-wic position-absolute" src=" " alt="logo ComptAgency"></a>
 		<ul>
-
+			{% if is_granted('ROLE_USER') %}
+				<li class="bold">
+					<a href="{{path('app_logout')}}" class="slide-line-grey">deconnection</a>
+				</li>
+				<li class="bold">
+					<a href="{{path('app_register')}}" class="slide-line-grey">Inscription</a>
+				</li>
+				<li class="bold">
+					<a href="#" class="slide-line-grey">Contact</a>
+				</li>
+				<li class="bold">
+					<a href="#" class="slide-line-grey">Vos avis</a>
+				</li>
+			{% else %}
 				<li class="bold">
 					<a href="{{path('app_login')}}" class="slide-line-grey">Connexion</a>
 				</li>
@@ -24,7 +37,7 @@
 				<li class="bold">
 					<a href="#" class="slide-line-grey">Vos avis</a>
 				</li>
-
+			{% endif %}
 			<div class="button-section"></div>
 		</ul>
 	</nav>
@@ -33,7 +46,20 @@
 {# menu burger #}
 <div id="menu1">
 	<ul>
-
+		{% if is_granted('ROLE_USER') %}
+			<li class="bold">
+				<a href="{{path('app_login')}}" class="slide-line-grey">Déconnexion</a>
+			</li>
+			<li class="bold">
+				<a href="{{path('app_register')}}" class="slide-line-grey">Inscription</a>
+			</li>
+			<li class="bold">
+				<a href="#" class="slide-line-grey">Contact</a>
+			</li>
+			<li class="bold">
+				<a href="#" class="slide-line-grey">Vos avis</a>
+			</li>
+		{% else %}
 			<li class="bold">
 				<a href="{{path('app_login')}}" class="slide-line-grey">Connexion</a>
 			</li>
@@ -46,7 +72,7 @@
 			<li class="bold">
 				<a href="#" class="slide-line-grey">Vos avis</a>
 			</li>
-
+		{% endif %}
 		<div class="button-section"></div>
 	</ul>
 </div>
