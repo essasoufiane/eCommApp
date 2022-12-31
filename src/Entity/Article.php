@@ -15,7 +15,7 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $ref = null;
+    private ?string $ref = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $name = null;
@@ -44,12 +44,12 @@ class Article
         return $this->id;
     }
 
-    public function getRef(): ?int
+    public function getRef(): ?string
     {
         return $this->ref;
     }
 
-    public function setRef(int $ref): self
+    public function setRef(?string $ref): self
     {
         $this->ref = $ref;
 
