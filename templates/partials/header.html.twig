@@ -1,4 +1,4 @@
-<header>
+{# <header>
 	<div class="header-title mob">
 		<div class="burger-menu d-flex justify-content-between" id="burger-menu">
 			<a href="/"><img class="logo-wic-mobile" src=" " alt="logo ComptAgency"></a>
@@ -11,18 +11,16 @@
 	<nav class="navbar-wic position-relative" id="navbar">
 		<a href="/"><img class="logo-wic position-absolute" src=" " alt="logo ComptAgency"></a>
 		<ul>
-			{% if is_granted('ROLE_USER') %}
+			{% if is_granted('ROLE_ADMIN') %}
 				<li class="bold">
 					<a href="{{path('app_logout')}}" class="slide-line-grey">deconnection</a>
 				</li>
 				<li class="bold">
-					<a href="{{path('app_register')}}" class="slide-line-grey">Inscription</a>
+					<a href="{{path('app_article_index')}}" class="slide-line-grey">Mes Article</a>
 				</li>
+			{% elseif is_granted('ROLE_USER') %}
 				<li class="bold">
-					<a href="#" class="slide-line-grey">Contact</a>
-				</li>
-				<li class="bold">
-					<a href="#" class="slide-line-grey">Vos avis</a>
+					<a href="{{path('app_logout')}}" class="slide-line-grey">deconnection</a>
 				</li>
 			{% else %}
 				<li class="bold">
@@ -31,22 +29,16 @@
 				<li class="bold">
 					<a href="{{path('app_register')}}" class="slide-line-grey">Inscription</a>
 				</li>
-				<li class="bold">
-					<a href="#" class="slide-line-grey">Contact</a>
-				</li>
-				<li class="bold">
-					<a href="#" class="slide-line-grey">Vos avis</a>
-				</li>
 			{% endif %}
 			<div class="button-section"></div>
 		</ul>
 	</nav>
-</header>
+</header> #}
 
 {# menu burger #}
-<div id="menu1">
+{# <div id="menu1">
 	<ul>
-		{% if is_granted('ROLE_USER') %}
+		{% if is_granted('ROLE_ADMIN') %}
 			<li class="bold">
 				<a href="{{path('app_login')}}" class="slide-line-grey">Déconnexion</a>
 			</li>
@@ -59,6 +51,10 @@
 			<li class="bold">
 				<a href="#" class="slide-line-grey">Vos avis</a>
 			</li>
+		{% elseif is_granted('ROLE_USER') %}
+			<li class="bold">
+				<a href="{{path('app_logout')}}" class="slide-line-grey">deconnection</a>
+			</li>
 		{% else %}
 			<li class="bold">
 				<a href="{{path('app_login')}}" class="slide-line-grey">Connexion</a>
@@ -66,15 +62,58 @@
 			<li class="bold">
 				<a href="{{path('app_register')}}" class="slide-line-grey">Inscription</a>
 			</li>
-			<li class="bold">
-				<a href="#" class="slide-line-grey">Contact</a>
-			</li>
-			<li class="bold">
-				<a href="#" class="slide-line-grey">Vos avis</a>
-			</li>
 		{% endif %}
 		<div class="button-section"></div>
 	</ul>
-</div>
+</div> #}
 
 {# END menu burger #}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">eComm App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="/">Accueil<span class="sr-only">(current)</span></a>
+			</li>
+		{% if is_granted('ROLE_ADMIN') %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Produit
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<a class="dropdown-item" href="{{path('app_article_index')}}">Géneral</a>
+				<a class="dropdown-item" href="{{path('app_article_new')}}">Ajouter un produit</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#">Something else here</a>
+				</div>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('app_logout')}}">deconnection</a>
+			</li>
+		{% elseif is_granted('ROLE_USER') %}
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('app_logout')}}">Déconnection</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('app_logout')}}">Mon compte</a>
+			</li>
+			{# <li class="nav-item">
+				<a class="nav-link disabled" href="#">Disabled</a>
+			</li> #}
+		{% else %}
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('app_register')}}">Inscription</a>
+			</li>
+		{% endif %}
+		</ul>
+  </div>
+</nav>
