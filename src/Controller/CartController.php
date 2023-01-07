@@ -4,15 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/cart')]
 class CartController extends AbstractController
 {
-    #[Route('/cart', name: 'app_cart')]
+    #[Route('/index', name: 'app_cart')]
     public function index(ArticleRepository $ArticleRepository): Response
     {
         return $this->render('cart/index.html.twig', [
@@ -21,18 +21,31 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart_panier', name: 'app_cart_panier')]
-    public function panier(ArticleRepository $ArticleRepository): Response
+    public function panier(ArticleRepository $ArticleRepository, SessionInterface $session): Response
     {
-        return $this->render('cart/panier.html.twig', [
-            // 'articles' => $ArticleRepository->findAll(),
-        ]);
+        $panier = $session->get("panier", []);
+
+        $dataPanier = [];
+        $total = 0;
+        foreach ($panier as $id => $quantity) {
+            $article = $ArticleRepository->find($id);
+            // dump($quantity);
+            $dataPanier[] = [
+                "produit" => $article,
+                "quantite" => $quantity,
+            ];
+            $total += $article->getPrice() * $quantity;
+        }
+
+        return $this->render('cart/panier.html.twig', compact("dataPanier", "total"));
     }
 
     #[Route('/add/{id}', name: 'app_cart_add')]
-    public function add(Article $article, $id, SessionInterface $session): Response
+    public function add($id, Article $Article, SessionInterface $session): Response
     {
         // On récupère le panier actuel
         $panier = $session->get("panier", []);
+        $id = $Article->getId();
 
         if (!empty($panier[$id])) {
             $panier[$id]++;
@@ -42,6 +55,60 @@ class CartController extends AbstractController
 
         // On sauvegarde dans la session
         $session->set("panier", $panier);
+        // dd($session);
+
+        return $this->redirectToRoute("app_cart_panier");
+    }
+
+    #[Route('/remove/{id}', name: 'app_cart_remove')]
+    public function remove($id, Article $Article, SessionInterface $session): Response
+    {
+        // On récupère le panier actuel
+        $panier = $session->get("panier", []);
+        $id = $Article->getId();
+
+        if (!empty($panier[$id])) {
+
+            if ($panier[$id] > 1) {
+                $panier[$id]--;
+            } else {
+                unset($panier[$id]);
+            }
+        }
+
+        // On sauvegarde dans la session
+        $session->set("panier", $panier);
+        // dd($session);
+
+        return $this->redirectToRoute("app_cart_panier");
+    }
+
+    #[Route('/delete/{id}', name: 'app_cart_delete')]
+    public function delete($id, Article $Article, SessionInterface $session): Response
+    {
+        // On récupère le panier actuel
+        $panier = $session->get("panier", []);
+        $id = $Article->getId();
+
+        if (!empty($panier[$id])) {
+            unset($panier[$id]);
+        }
+
+        // On sauvegarde dans la session
+        $session->set("panier", $panier);
+        // dd($session);
+
+        return $this->redirectToRoute("app_cart_panier");
+    }
+
+    #[Route('/deleteAll/', name: 'app_cart_delete_all')]
+    public function deleteAll(SessionInterface $session): Response
+    {
+        // On écrase la session pour vider le panier
+        // $session->set("panier", []);
+
+        // on efface le panier
+        $session->remove("panier");
 
         return $this->redirectToRoute("app_cart_panier");
     }

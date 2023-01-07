@@ -1,49 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Panier
+{% endblock %}
 
 {% block body %}
-<div class="container d-flex justify-content-center">
 
-	{# <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner">
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Prix</th>
+				<th scope="col">Réference</th>
+				<th scope="col">Total</th>
+			</tr>
+		</thead>
+		<tbody>
 
-			<div class="carousel-item active">
-				<div class="card" style="width: 18rem;">
-					<img class="card-img-top" src="https://picsum.photos/500" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">ujgfjv</h5>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
-					</div>
-				</div>
-			</div>
-
-			{% for article in articles %}
-				<div class="carousel-item">
-					<div class="card" style="width: 18rem;">
-						<img class="card-img-top" src="https://picsum.photos/500" alt="Card image cap">
-						<div class="card-body">
-							<h5 class="card-title">{{ article.name }}</h5>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							<a href="{{path("app_cart_add", {id: article.id})}}" class="btn btn-primary">Go somewhere</a>
-						</div>
-					</div>
-				</div>
-
+			{% for element in dataPanier %}
+				<tr>
+					<td scope="row">{{element.produit.name}}</td>
+					<td>{{element.produit.price}}
+						€</td>
+					<td>{{element.produit.ref}}</td>
+					<td>{{element.quantite * element.produit.price}}
+						€</td>
+					<td>
+						<a href="{{path("app_cart_add", {id: element.produit.id})}}" class="btn btn-success">
+							<i class="fas fa-plus"></i>
+						</a>
+						<a href="{{path("app_cart_remove", {id: element.produit.id})}}" class="btn btn-warning">
+							<i class="fa-solid fa-xmark"></i>
+						</a>
+						<a href="{{path("app_cart_delete", {id: element.produit.id})}}" class="btn btn-danger"></a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td>
+						<p>Votre panier est vide</p>
+					</td>
+				</tr>
 			{% endfor %}
 
-		</div>
-		<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">reculer</span>
-		</a>
-		<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">avancer</span>
-		</a>
-	</div> #}
+		</tbody>
 
-</div>
+		<tfoot>
+			<tr>
+				<td colspan="3">Total</td>
+				<td class="text-end">{{ total }}
+					€</td>
+				<td>
+					<a href="{{path("app_cart_delete_all")}}" class="btn btn-danger"> Supprimer panier</a>
+				</td>
+			</tr>
+		</tfoot>
+
+	</table>
 
 {% endblock %}
