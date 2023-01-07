@@ -3,7 +3,7 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    {# <h1>User index</h1>
 
     <table class="table">
         <thead>
@@ -41,5 +41,28 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+    <a href="{{ path('app_user_new') }}">Create new</a> #}
+
+    <section class="container">
+    <h1 class="titleContact py-3">Mon profil</h1>
+    <article class="p-3 shadow d-flex justify-content-between flex-wrap">
+        <div class="m-auto">
+            {# <p class="h3"><span class="colorPrimary font-15"> Id :</span>
+                {{ app.user.id }}</p> #}
+            <p class="h3"><span class="colorPrimary font-15"> Email :</span>
+                {{ app.user.email }}</p>
+            <p class="h3"><span class="colorPrimary font-15"> Nom :</span>
+                {{ app.user.lastname }}</p>
+            <p class="h3"><span class="colorPrimary font-15"> Prénom :</span>
+                {{ app.user.firstname }}</p>
+            <p class="h3"><span class="colorPrimary font-15">Tél :</span> 
+                {{ app.user.phone }}</p>
+        </div>
+
+        {# <img id="imgProfil" class="rounded-circle m-auto" width="300px" src="{{asset('user/images/profil/'~app.user.image)}}" alt="photo de profil"> #}
+
+    </article>
+    <a href="{{ path('app_user_edit', {'id': app.user.id}) }}" class="btn btn-warning text-black my-3">Éditer</a>
+
+</section>
 {% endblock %}
