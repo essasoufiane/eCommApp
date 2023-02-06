@@ -32,10 +32,6 @@ class ArticleCrudController extends AbstractCrudController
             NumberField::new('quantity'),
             DateTimeField::new('dateadded')->setFormat(DateTimeField::FORMAT_LONG, DateTimeField::FORMAT_NONE),
             SlugField::new('ref')->setTargetFieldName('name'),
-            // ImageFields::new('image')
-            //     ->setBasePath(' uploads/')
-            //     ->setUploadedFileNamePattern('[randomhash].[extension]')
-            //     ->setRequired(false),
             AssociationField::new('category'),
             AssociationField::new('user'),
             ImageField::new('image', 'image')
@@ -46,7 +42,6 @@ class ArticleCrudController extends AbstractCrudController
                 ->onlyOnForms()
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            // ->setFormType(VichImageType::class)
         ];
     }
 }
