@@ -1,49 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Catalogue
+{% endblock %}
 
 {% block body %}
-<div class="container d-flex justify-content-center">
 
-	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner">
+	<h1 class="text-center text-2xl py-3">Catalogue</h1>
 
-			<div class="carousel-item active">
-				<div class="card" style="width: 18rem;">
-					<img class="card-img-top" src="https://picsum.photos/500" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">ujgfjv</h5>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Go somewhere</a>
+	<section class="flex flex-wrap justify-around">
+		{% for article in articles %}
+			<article class="flex justify-center pt-3">
+				<div class="rounded-lg shadow-lg bg-white max-w-sm">
+					<a href="{{path("app_cart_add", {id: article.id})}}">
+						<img class="rounded-t-lg" src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt=""/>
+					</a>
+					<div class="p-6">
+						<h5 class="text-gray-900 text-xl font-medium mb-2">{{ article.name }}</h5>
+						<p class="text-gray-700 text-base mb-4">{{ article.description }}</p>
+						<p class="text-gray-700 text-base mb-4">{{ (article.price / 100)|number_format(2, ',', '.') }}
+							€</p>
+						<a href="{{path("app_cart_add", {id: article.id})}}" type="button" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Acheter</a>
 					</div>
 				</div>
-			</div>
-
-			{% for article in articles %}
-				<div class="carousel-item">
-					<div class="card" style="width: 18rem;">
-						<img class="card-img-top" src="https://picsum.photos/500" alt="Card image cap">
-						<div class="card-body">
-							<h5 class="card-title">{{ article.name }}</h5>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							<a href="{{path("app_cart_add", {id: article.id})}}" class="btn btn-primary">Go somewhere</a>
-						</div>
-					</div>
-				</div>
-
-			{% endfor %}
-
-		</div>
-		<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">reculer</span>
-		</a>
-		<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">avancer</span>
-		</a>
-	</div>
-
-</div>
+			</article>
+		{% endfor %}
+	</section>
 
 {% endblock %}
