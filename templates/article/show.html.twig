@@ -1,50 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article{% endblock %}
+{% block title %}Article
+{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Ref</th>
-                <td>{{ article.ref }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ article.name }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ article.price }}</td>
-            </tr>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ article.quantity }}</td>
-            </tr>
-            <tr>
-                <th>State</th>
-                <td>{{ article.state }}</td>
-            </tr>
-            <tr>
-                <th>Dateadded</th>
-                <td>{{ article.dateadded ? article.dateadded|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Datemodification</th>
-                <td>{{ article.datemodification ? article.datemodification|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<h1 class="text-center py-3">{{ article.name }}</h1>
 
-    <a href="{{ path('app_article_index') }}">back to list</a>
+	<div class="flex justify-center">
+		<div class="rounded-lg shadow-lg bg-white max-w-sm">
+			<a href="#!">
+				<img class="rounded-t-lg" src="{{ article.image }}" alt=""/>
+			</a>
+			<div class="p-6">
+				<h5 class="text-gray-900 text-xl font-medium mb-2">{{ article.subtitle }}</h5>
+				<p class="text-gray-700 text-base mb-4">{{ article.description }}</p>
+				<p class="text-gray-700 text-base mb-4">{{ (article.price / 100)|number_format(2, ',', '.') }}</p>
+				<a href="{{path("app_cart_add", {id: article.id})}}" type="button" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Acheter</a>
+			</div>
+		</div>
+	</div>
 
-    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-
-    {{ include('article/_delete_form.html.twig') }}
 {% endblock %}
