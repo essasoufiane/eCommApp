@@ -25,6 +25,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "sass": "^1.57.1"
+        "sass": "^1.57.1",
+        "tw-elements": "^1.0.0-alpha13"
     }
 }
