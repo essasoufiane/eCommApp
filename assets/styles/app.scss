@@ -1,7 +1,8 @@
 
-@import "variables";
-@import "index";
-@import "header";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import 'tw-elements';
+@import "variables";
+@import "index";
+@import "header";

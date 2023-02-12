@@ -3,27 +3,38 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Repository\ArticleRepository;
 use App\Service\Search;
 use App\Form\SearchType;
+use App\Repository\ArticleRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 #[Route('/cart')]
 class CartController extends AbstractController
 {
     #[Route('/index', name: 'app_cart')]
-    public function index(ArticleRepository $ArticleRepository): Response
+    public function index(ArticleRepository $ArticleRepository, Request $request): Response
     {
         $search = new Search();
         $form = $this->createForm(SearchType::class, $search);
 
-        return $this->render('cart/index.html.twig', [
-            'articles' => $ArticleRepository->findAll(),
-            'form' => $form->createView(),
-        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->render('cart/index.html.twig', [
+                'articles' => $ArticleRepository->findWithSearch($search),
+                'form' => $form->createView(),
+            ]);
+        } else {
+            return $this->render('cart/index.html.twig', [
+                'articles' => $ArticleRepository->findAll(),
+                'form' => $form->createView(),
+            ]);
+        }
     }
 
     #[Route('/cart_panier', name: 'app_cart_panier')]
@@ -35,7 +46,6 @@ class CartController extends AbstractController
         $total = 0;
         foreach ($panier as $id => $quantity) {
             $article = $ArticleRepository->find($id);
-            // dump($quantity);
             $dataPanier[] = [
                 "produit" => $article,
                 "quantite" => $quantity,
@@ -84,7 +94,6 @@ class CartController extends AbstractController
 
         // On sauvegarde dans la session
         $session->set("panier", $panier);
-        // dd($session);
 
         return $this->redirectToRoute("app_cart_panier");
     }
@@ -102,7 +111,6 @@ class CartController extends AbstractController
 
         // On sauvegarde dans la session
         $session->set("panier", $panier);
-        // dd($session);
 
         return $this->redirectToRoute("app_cart_panier");
     }
@@ -110,8 +118,6 @@ class CartController extends AbstractController
     #[Route('/deleteAll/', name: 'app_cart_delete_all')]
     public function deleteAll(SessionInterface $session): Response
     {
-        // On écrase la session pour vider le panier
-        // $session->set("panier", []);
 
         // on efface le panier
         $session->remove("panier");
