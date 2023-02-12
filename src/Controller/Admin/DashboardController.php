@@ -50,12 +50,12 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Create Category', 'fas fa-plus', Category::class)->setAction(Crud::PAGE_NEW),
         ]);
 
-        yield MenuItem::subMenu('Article', 'fas fa-list')->setSubItems([
+        yield MenuItem::subMenu('Article', 'fas fa-store')->setSubItems([
             MenuItem::linkToCrud('Show Article', 'fas fa-eye', Article::class)->setAction(Crud::PAGE_INDEX),
             MenuItem::linkToCrud('Create Article', 'fas fa-plus', Article::class)->setAction(Crud::PAGE_NEW),
         ]);
 
-        yield MenuItem::subMenu('Carrier', 'fas fa-list')->setSubItems([
+        yield MenuItem::subMenu('Carrier', 'fas fa-truck')->setSubItems([
             MenuItem::linkToCrud('Show Carrier', 'fas fa-eye', Carrier::class)->setAction(Crud::PAGE_INDEX),
             MenuItem::linkToCrud('Create Carrier', 'fas fa-plus', Carrier::class)->setAction(Crud::PAGE_NEW),
         ]);
