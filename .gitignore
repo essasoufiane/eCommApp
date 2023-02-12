@@ -24,6 +24,7 @@
 /node_modules/
 /public/build/
 /public/
+/migration/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###

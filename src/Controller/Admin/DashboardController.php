@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 
 use App\Entity\Article;
+use App\Entity\Carrier;
 use App\Entity\Category;
 use App\Field\VichImageField;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +53,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Article', 'fas fa-list')->setSubItems([
             MenuItem::linkToCrud('Show Article', 'fas fa-eye', Article::class)->setAction(Crud::PAGE_INDEX),
             MenuItem::linkToCrud('Create Article', 'fas fa-plus', Article::class)->setAction(Crud::PAGE_NEW),
+        ]);
+
+        yield MenuItem::subMenu('Carrier', 'fas fa-list')->setSubItems([
+            MenuItem::linkToCrud('Show Carrier', 'fas fa-eye', Carrier::class)->setAction(Crud::PAGE_INDEX),
+            MenuItem::linkToCrud('Create Carrier', 'fas fa-plus', Carrier::class)->setAction(Crud::PAGE_NEW),
         ]);
 
         yield MenuItem::linkToRoute('Quitter le dashboard', 'fas fa-door-open', 'app_home');
