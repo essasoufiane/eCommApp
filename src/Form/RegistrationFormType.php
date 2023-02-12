@@ -45,7 +45,6 @@ class RegistrationFormType extends AbstractType
                         'min' => 3,
                         'minMessage' => 'Ce champ doit contenir au moins {{ limit }} caractères',
                         'maxMessage' => 'Ce champ doit contenir maximum {{ limit }} caractères',
-                    
                         'max' => 40,
                     ]),
                 ],
@@ -67,7 +66,8 @@ class RegistrationFormType extends AbstractType
                     transition
                     ease-in-out
                     m-0
-                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                    "
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -137,14 +137,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => 'You should agree to our terms.',
-            //         ]),
-            //     ],
-            // ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

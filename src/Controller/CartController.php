@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Service\Search;
+use App\Form\SearchType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -15,8 +17,12 @@ class CartController extends AbstractController
     #[Route('/index', name: 'app_cart')]
     public function index(ArticleRepository $ArticleRepository): Response
     {
+        $search = new Search();
+        $form = $this->createForm(SearchType::class, $search);
+
         return $this->render('cart/index.html.twig', [
             'articles' => $ArticleRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 

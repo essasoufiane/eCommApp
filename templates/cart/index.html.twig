@@ -6,13 +6,18 @@
 {% block body %}
 
 	<h1 class="text-center text-2xl py-3">Catalogue</h1>
+	<div class="flex flex-wrap">
+
+	<section>
+	{{form(form)}}
+	</section>
 
 	<section class="flex flex-wrap justify-around">
 		{% for article in articles %}
 			<article class="flex justify-center pt-3">
 				<div class="rounded-lg shadow-lg bg-white max-w-sm">
-					<a href="{{ path('app_article_show', {'id': article.id}) }}">
-						<img class="rounded-t-lg" src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt=""/>
+					<a href="{{ path('app_article_showRef', {'ref': article.ref}) }}">
+						<img class="rounded-t-lg" src="{{asset('public/uploads/'~article.image)}}" alt=""/>
 					</a>
 					<div class="p-6">
 						<h5 class="text-gray-900 text-xl font-medium mb-2">{{ article.name }}</h5>
@@ -25,4 +30,5 @@
 		{% endfor %}
 	</section>
 
+	</div>
 {% endblock %}
