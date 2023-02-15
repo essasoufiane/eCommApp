@@ -9,6 +9,10 @@
 		<div class="table-caption">Je passe ma commande</div>
 		<div class="table-header-group">
 			<div class="table-cell bg-teal-400">Choisir mon adresse de livraison</div>
+			{% set formHtml %}
+			{{ form(form) }}
+			{% endset %}
+			{{ formHtml|replace({'[br]' : '<br/>'})|raw }}
 			<div class="table-cell bg-teal-400">Choisir mon transporteur</div>
 		</div>
 		<div class="table-row-group">
