@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
+
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
@@ -46,9 +48,18 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
+    // #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
+    // public function show(Article $article): Response
+    // {
+    //     return $this->render('article/show.html.twig', [
+    //         'article' => $article,
+    //     ]);
+    // }
+
+    #[Route('/{ref}', name: 'app_article_showRef', methods: ['GET'])]
+    public function showRef(Article $article,$ref): Response
     {
+        // dd($article->getName());
         return $this->render('article/show.html.twig', [
             'article' => $article,
         ]);

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Service\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,30 @@ class ArticleRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return Article[]
+     */
+    public function findWithSearch(Search $search) {
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('c','a')
+            ->join('a.category', 'c');
+
+            if (!empty($search->category)) {
+                $query = $query
+                    ->andWhere('c.id IN (:category)')
+                    ->setParameter('category', $search->category);
+            }
+
+            if (!empty($search->string)) {
+                $query = $query
+                    ->andWhere('a.name LIKE :string')
+                    ->setParameter('string', "%{$search->string}%");
+            }
+
+            return $query->getQuery()->getResult();
     }
 
 //    /**

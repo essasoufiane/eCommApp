@@ -4,20 +4,52 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container pt-5">
-		<h1>Enregistrement</h1>
+	<div class="pt-5 max-w-lg mx-auto">
+		<h1 class="text-center font-semibold text-4xl">Inscription</h1>
 
 		{{ form_start(registrationForm) }}
-		{{ form_row(registrationForm.firstname) }}
-		{{ form_row(registrationForm.lastname) }}
-		{{ form_row(registrationForm.phone) }}
-		{{ form_row(registrationForm.email) }}
-		{{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-		{# {{ form_row(registrationForm.agreeTerms) }} #}
+		<div class="py-2.5">
+		{{ form_label(registrationForm.firstname, 'Prénom', {'label_attr': {'class': 'font-semibold text-xl'}}) }}
+		</div>
+		{{ form_widget(registrationForm.firstname) }}
+		<div class="py-2.5">
+		{{ form_label(registrationForm.lastname, 'Nom', {'label_attr': {'class': 'font-semibold text-xl'}}) }}
+		</div>
+		{{ form_widget(registrationForm.lastname) }}
+		<div class="py-2.5">
+		{{ form_label(registrationForm.phone, 'Télephone', {'label_attr': {'class': 'font-semibold text-xl rounded-full'}}) }}
+		</div>
+		{{ form_widget(registrationForm.phone) }}
+		<div class="py-2.5">
+		{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'font-semibold text-xl'}}) }}
+		</div>
+		<div class="py-2.5">
+		{{ form_widget(registrationForm.email) }}
+		</div>
+		<div class="py-2.5">
+		{{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'font-semibold text-xl'}}) }}
+		</div>
+		{{ form_widget(registrationForm.plainPassword) }}
 
-		<button type="submit" class="btn btn-success">Enregistrement</button>
+		<button type="submit" class="
+			w-full
+			my-4
+			px-6
+			py-2.5
+			bg-blue-600
+			text-white
+			font-medium
+			text-xs
+			leading-tight
+			uppercase
+			rounded
+			shadow-md
+			hover:bg-blue-700 hover:shadow-lg
+			focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+			active:bg-blue-800 active:shadow-lg
+			transition
+			duration-150
+			ease-in-out">Enregistrement</button>
 		{{ form_end(registrationForm) }}
 	</div>
 {% endblock %}
